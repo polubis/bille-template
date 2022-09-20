@@ -113,7 +113,11 @@ export const ItemList = <T extends DataItem>({
             value={item.name}
             onChange={(e) => changeItem(item, e.target.value)}
           />
-          <IconContainer type="delete" onClick={() => onDeleteItem(item.id)}>
+          <IconContainer
+            type="delete"
+            data-cy="deleteButton"
+            onClick={() => onDeleteItem(item.id)}
+          >
             <Icon path={mdiTrashCanOutline} size={1.2} color="black" />
           </IconContainer>
         </Row>
@@ -138,7 +142,12 @@ export const ItemList = <T extends DataItem>({
             type="add"
             onClick={() => addItem(newItem)}
           >
-            <Icon path={mdiPlus} size={1.2} color="black" />
+            <Icon
+              path={mdiPlus}
+              size={1.2}
+              color="black"
+              data-cy="plusButton"
+            />
           </IconContainer>
         ) : null}
       </Row>

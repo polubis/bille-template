@@ -22,13 +22,13 @@ describe('<Navigation>', () => {
   const ITEMS: DrawerMenuItem[] = [
     {
       icon: 'IconDrawer1',
-      link: '/',
+      link: '1/',
       title: 'Offices',
       onClick: () => spy(),
     },
     {
       icon: 'IconDrawer2',
-      link: '/',
+      link: '2/',
       title: 'Create office',
       onClick: () => spy(),
     },

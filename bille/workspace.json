@@ -6,6 +6,7 @@
     "billespace-e2e": "apps/billespace-e2e",
     "billespace-services": "libs/billespace-services",
     "billespace-state": "libs/billespace-state",
+    "developer-kit": "libs/developer-kit",
     "ui": "libs/ui",
     "ui-e2e": "apps/ui-e2e"
   }

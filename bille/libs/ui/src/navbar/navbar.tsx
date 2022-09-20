@@ -29,6 +29,7 @@ const Button = styled.div`
 
   svg {
     transition: 0.1s;
+    color: #fff;
   }
 
   &:hover {
@@ -48,6 +49,10 @@ const IconContainer = styled.div`
   &:hover {
     transform: scale(1.2);
   }
+
+  svg {
+    color: #fff;
+  }
 `;
 
 export interface NavbarProps {
@@ -59,13 +64,25 @@ export interface NavbarProps {
 export const Navbar = ({ onMenuClick, mainItem, rightItem }: NavbarProps) => {
   return (
     <Container>
-      <IconContainer onClick={onMenuClick} title="Menu">
-        <Icon path={mdiMenu} size={1.3} color="white" />
+      <IconContainer
+        onClick={onMenuClick}
+        title="Menu"
+        data-cy="open-menu-button"
+      >
+        <Icon path={mdiMenu} size={1.3} />
       </IconContainer>
-      <Button onClick={mainItem.onClick} title={mainItem.title}>
+      <Button
+        onClick={mainItem.onClick}
+        title={mainItem.title}
+        data-cy="main-menu-button"
+      >
         {mainItem.icon}
       </Button>
-      <IconContainer onClick={rightItem.onClick} title={rightItem.title}>
+      <IconContainer
+        onClick={rightItem.onClick}
+        title={rightItem.title}
+        data-cy="right-menu-button"
+      >
         {rightItem.icon}
       </IconContainer>
     </Container>

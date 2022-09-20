@@ -165,8 +165,9 @@ export const Drawer = ({ onClose, items }: DrawerProps) => {
     <>
       <Backdrop open={open} onClick={close} />
       <Catcher>
-        <Container open={open}>
+        <Container open={open} data-cy="drawer">
           {logo}
+
           <List>
             {items.map((item) => (
               <Link
@@ -175,11 +176,13 @@ export const Drawer = ({ onClose, items }: DrawerProps) => {
                 title={item.title}
               >
                 {item.icon}
+
                 <Heading>{item.title}</Heading>
               </Link>
             ))}
           </List>
-          <Button onClick={close} data-testid="close-button">
+
+          <Button onClick={close} data-testid="close-button" data-cy="close-menu">
             <Icon path={mdiChevronLeft} size={1.3} color="white" />
           </Button>
         </Container>

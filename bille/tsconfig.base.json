@@ -17,6 +17,7 @@
     "paths": {
       "@bille/billespace-services": ["libs/billespace-services/src/index.ts"],
       "@bille/billespace-state": ["libs/billespace-state/src/index.ts"],
+      "@bille/developer-kit": ["libs/developer-kit/src/index.ts"],
       "@bille/ui": ["libs/ui/src/index.ts"]
     }
   },

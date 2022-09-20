@@ -27,4 +27,6 @@ export * from './navbar';
 export * from './drawer';
 export * from './navigation';
 export * from './alert';
+export * from './bar-chart';
 export * from './no-data-screen';
+export * from './error-boundary';
