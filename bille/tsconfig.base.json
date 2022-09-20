@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@bille/billespace-services": ["libs/billespace-services/src/index.ts"],
       "@bille/billespace-state": ["libs/billespace-state/src/index.ts"]
     }
   },
