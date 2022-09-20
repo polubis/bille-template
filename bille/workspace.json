@@ -5,6 +5,7 @@
     "billespace": "apps/billespace",
     "billespace-e2e": "apps/billespace-e2e",
     "billespace-services": "libs/billespace-services",
-    "billespace-state": "libs/billespace-state"
+    "billespace-state": "libs/billespace-state",
+    "ui": "libs/ui"
   }
 }
