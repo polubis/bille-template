@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@bille/billespace-state": ["libs/billespace-state/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

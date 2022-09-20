@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "billespace": "apps/billespace",
-    "billespace-e2e": "apps/billespace-e2e"
+    "billespace-e2e": "apps/billespace-e2e",
+    "billespace-state": "libs/billespace-state"
   }
 }
