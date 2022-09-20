@@ -9,6 +9,8 @@
   },
   "private": true,
   "dependencies": {
+    "@mdi/js": "^7.0.96",
+    "@mdi/react": "^1.6.1",
     "core-js": "^3.6.5",
     "date-fns": "^2.29.3",
     "react": "18.2.0",
@@ -33,6 +35,7 @@
     "@nrwl/storybook": "14.7.6",
     "@nrwl/web": "14.7.6",
     "@nrwl/workspace": "14.7.6",
+    "@reduxjs/toolkit": "^1.8.5",
     "@storybook/addon-essentials": "~6.5.9",
     "@storybook/builder-webpack5": "~6.5.9",
     "@storybook/core-server": "~6.5.9",
