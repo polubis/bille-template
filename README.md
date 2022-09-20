@@ -8,28 +8,32 @@
 2. `npm install --legacy-peer-deps`
 3. `npm start` - runs all apps in monorepo in our case we have only one
 
+## Creating storybook for React UI library
+
+`npx nx g @nrwl/react:storybook-configuration ui`
+
+## Running storybook for UI
+
+`npx nx run ui:storybook`
+
+## Creating React UI library
+
+`npx nx g @nrwl/react:lib ui`
+
 ## Creating TypeScript library
 
-`cd billennium`
 `npx nx generate @nrwl/js:lib api` or `npx nx generate @nrwl/js:lib api --appProject=billespace`
 
 Remember to stop the dev server and run `npm start` again for affected code. Also, there will be probably a need to restart the TypeScript server.
 
-## Running storybook for UI
-
-`cd billennium`
-`npx nx run ui:storybook`
-
 ## Creating Nest.js project
 
-`cd billennium`
 `npx nx g @nrwl/nest:app project-name`
 
 ## Check and update plugin versions
 
 nx and @nrwl/node should have same versions
 
-`cd billennium`
 `npx nx report`
 
 `npm install nx@version --legacy-peer-deps`
@@ -37,12 +41,10 @@ nx and @nrwl/node should have same versions
 
 ## Running Nest.js server
 
-`cd billennium`
 `npx nx serve project-name`
 
 ## Building Nest.js server
 
-`cd billennium`
 `npx nx build project-name`
 
 ## Testing
