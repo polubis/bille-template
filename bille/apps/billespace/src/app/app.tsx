@@ -1,16 +1,9 @@
-import styled from 'styled-components';
-import NxWelcome from './nx-welcome';
+import { Button } from '@bille/ui';
 
-const StyledApp = styled.div`
-  // Your style here
-`;
-
-export function App() {
+export const App = () => {
   return (
-    <StyledApp>
-      <NxWelcome title="billespace" />
-    </StyledApp>
+    <Button shape="rounded" motive="orange">
+      Content
+    </Button>
   );
-}
-
-export default App;
+};
