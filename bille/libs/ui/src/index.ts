@@ -30,3 +30,4 @@ export * from './alert';
 export * from './bar-chart';
 export * from './no-data-screen';
 export * from './error-boundary';
+export * from './steps';
