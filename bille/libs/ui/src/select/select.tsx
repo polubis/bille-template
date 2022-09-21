@@ -117,7 +117,13 @@ export const Select = ({
         disabled={disabled}
         data-loading={!!loading}
       >
-        <Input placeholder={placeholder} value={value} disabled={disabled} />
+        <Input
+          data-cy="select-input"
+          placeholder={placeholder}
+          readOnly
+          value={value}
+          disabled={disabled}
+        />
         {loading ? (
           <Icon
             path={mdiLoading}

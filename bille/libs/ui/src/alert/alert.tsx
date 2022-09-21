@@ -12,7 +12,7 @@ import { SmallTitle } from '../typography';
 export interface AlertProps {
   severity: 'error' | 'warning' | 'info' | 'success';
   message: string;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const THEME = {
@@ -82,9 +82,11 @@ export const Alert = ({ severity, message, onClose }: AlertProps) => {
     <Container severity={severity}>
       <IconContainer>{THEME[severity].icon}</IconContainer>
       <SmallTitle>{message}</SmallTitle>
-      <IconContainer onClick={onClose} data-testid="close-icon">
-        <Icon path={mdiClose} size={1} color={THEME[severity].fontColor} />
-      </IconContainer>
+      {onClose && (
+        <IconContainer onClick={onClose} data-testid="close-icon">
+          <Icon path={mdiClose} size={1} color={THEME[severity].fontColor} />
+        </IconContainer>
+      )}
     </Container>
   );
 };

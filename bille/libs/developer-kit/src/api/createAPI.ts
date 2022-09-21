@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { from } from 'rxjs';
+import { delay, from, map, Observable, of } from 'rxjs';
 
 export interface APIConfig {
   url: string;
@@ -77,6 +77,12 @@ const getBaseUrl = (
   serviceConfig: ServiceConfig
 ): string => [apiConfig.url, serviceConfig.name].join('/');
 
+const mock = <R>(data: R, time = 1500): Observable<{ data: R }> =>
+  of(data).pipe(
+    delay(time),
+    map((data) => ({ data }))
+  );
+
 export const createAPI = (apiConfig: APIConfig) => {
   return {
     createService: (serviceConfig: ServiceConfig) => {
@@ -96,6 +102,7 @@ export const createAPI = (apiConfig: APIConfig) => {
           };
 
           handler.url = extractUrl(apiConfig, serviceConfig, methodConfig);
+          handler.mock = (data: R, time?: number) => mock<R>(data, time);
 
           return handler;
         };
@@ -120,6 +127,7 @@ export const createAPI = (apiConfig: APIConfig) => {
           };
 
           handler.url = extractUrl(apiConfig, serviceConfig, methodConfig);
+          handler.mock = (data: R, time?: number) => mock<R>(data, time);
 
           return handler;
         };
