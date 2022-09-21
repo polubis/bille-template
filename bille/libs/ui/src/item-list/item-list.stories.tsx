@@ -61,8 +61,3 @@ const Template: Story<ItemListProps<Item>> = (args) => {
 
 export const Basic = Template.bind({});
 Basic.args = {};
-
-export const Invalid = Template.bind({});
-Invalid.args = {
-  invalid: true,
-};

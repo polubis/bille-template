@@ -60,3 +60,11 @@ export const image =
   (message = () => 'File must be an image') =>
   (file: File) =>
     run(!/image/.test(file.type), message());
+
+export const unique =
+  (key: string, message = () => 'Zone names need to be unique') =>
+  (array: Record<string, any>[]) =>
+    run(
+      new Set(array.map((element) => element[key])).size !== array.length,
+      message()
+    );
