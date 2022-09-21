@@ -14,7 +14,7 @@ import {
   Topbar,
 } from '@bille/ui';
 import Icon from '@mdi/react';
-import { mdiAccountAlert, mdiApps, mdiRefresh, mdiHome } from '@mdi/js';
+import { mdiHome, mdiOfficeBuilding } from '@mdi/js';
 
 type PartialDrawerMenuItem = Omit<DrawerMenuItem, 'onClick'>;
 
@@ -25,19 +25,9 @@ export const DRAWER_ITEMS: PartialDrawerMenuItem[] = [
     title: 'Home',
   },
   {
-    link: '/typical',
-    icon: <Icon path={mdiAccountAlert} size={1.3} />,
-    title: 'Typical',
-  },
-  {
-    link: '/modular',
-    icon: <Icon path={mdiApps} size={1.3} />,
-    title: 'Modular',
-  },
-  {
-    link: '/cqrs',
-    icon: <Icon path={mdiRefresh} size={1.3} />,
-    title: 'CQRS',
+    link: '/office-management',
+    icon: <Icon path={mdiOfficeBuilding} size={1.3} />,
+    title: 'Office management',
   },
 ];
 

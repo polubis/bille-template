@@ -1,1 +1,1 @@
-export * from './lib/billespace-services';
+export * from './offices';
