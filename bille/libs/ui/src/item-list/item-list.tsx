@@ -4,12 +4,11 @@ import { useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { Input } from '../input';
 
-type DataItem = { id: string | number; name: string };
+export type DataItem = { id: string; name: string };
 
 export interface ItemListProps<T extends DataItem> {
   data: T[];
   placeholder?: string;
-  invalid?: boolean;
   onChange: (item: T) => void;
   onDeleteItem: (id: T['id']) => void;
   onItemAdd: (name: string) => void;
@@ -32,7 +31,6 @@ const Container = styled.div`
 `;
 
 const Row = styled.div<{
-  invalid?: boolean;
   item?: boolean;
   showIcon: boolean;
 }>`
@@ -61,7 +59,7 @@ const Row = styled.div<{
     `}
 `;
 
-const IconContainer = styled.div<{ invalid?: boolean; type: 'delete' | 'add' }>`
+const IconContainer = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
@@ -82,19 +80,16 @@ const IconContainer = styled.div<{ invalid?: boolean; type: 'delete' | 'add' }>`
 
 export const ItemList = <T extends DataItem>({
   data,
-  invalid,
   placeholder = 'Add new item...',
   onChange,
   onDeleteItem,
   onItemAdd,
 }: ItemListProps<T>) => {
   const [newItem, setNewItem] = useState<string>('');
-  const [error, setError] = useState<boolean>(false);
 
   const addItem = (name: string, key?: string) => {
     if (!key || key === 'Enter') {
       if (name.length > 0) {
-        setError(false);
         setNewItem('');
         onItemAdd(name);
       }
@@ -110,12 +105,12 @@ export const ItemList = <T extends DataItem>({
       {data.map((item) => (
         <Row item key={item.id} showIcon>
           <Input
+            data-cy="edit-item-input"
             value={item.name}
             onChange={(e) => changeItem(item, e.target.value)}
           />
           <IconContainer
-            type="delete"
-            data-cy="deleteButton"
+            data-cy="delete-item-button"
             onClick={() => onDeleteItem(item.id)}
           >
             <Icon path={mdiTrashCanOutline} size={1.2} color="black" />
@@ -124,29 +119,24 @@ export const ItemList = <T extends DataItem>({
       ))}
 
       <Row
-        invalid={error}
         showIcon={newItem.length > 0}
         onKeyDown={(e) => addItem(newItem, e.key)}
       >
         <Input
+          data-cy="add-item-input"
           value={newItem}
           placeholder={placeholder}
-          invalid={error}
           onChange={(event) => {
             setNewItem(event.target.value);
           }}
         />
         {newItem.length ? (
-          <IconContainer
-            invalid={newItem.length ? error : invalid}
-            type="add"
-            onClick={() => addItem(newItem)}
-          >
+          <IconContainer onClick={() => addItem(newItem)}>
             <Icon
               path={mdiPlus}
               size={1.2}
               color="black"
-              data-cy="plusButton"
+              data-cy="add-item-button"
             />
           </IconContainer>
         ) : null}
