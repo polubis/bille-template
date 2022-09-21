@@ -10,12 +10,13 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2019", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@bille/billespace-services": ["libs/billespace-services/src/index.ts"],
+      "@bille/billespace-store": ["libs/billespace-store/src/index.ts"],
       "@bille/developer-kit": ["libs/developer-kit/src/index.ts"],
       "@bille/ui": ["libs/ui/src/index.ts"]
     }

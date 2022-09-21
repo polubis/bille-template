@@ -1,14 +1,10 @@
-export interface CreateOfficePayload {
+import { OfficeZone, ParkingZone } from '../common';
+
+export interface OfficePayload {
   address: string;
   postCode: string;
   cityId: string;
   countryId: string;
-  officeZones: {
-    name: string;
-    desks: number;
-  }[];
-  parkingZones: {
-    name: string;
-    spaces: number;
-  }[];
+  officeZones: OfficeZone[];
+  parkingZones: ParkingZone[];
 }

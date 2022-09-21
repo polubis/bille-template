@@ -69,6 +69,7 @@ export const Range = ({
       </Header>
       <Input
         type="range"
+        data-cy="range-input"
         min={min}
         max={max}
         value={value}
