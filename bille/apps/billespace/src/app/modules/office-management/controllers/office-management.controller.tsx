@@ -10,7 +10,10 @@ import {
   useStepsProvider,
 } from '@bille/ui';
 import Loadable from 'react-loadable';
-import { getOfficeManagementStage, useSelector } from '@bille/billespace-store';
+import {
+  getOfficeManagementReducer,
+  useSelector,
+} from '@bille/billespace-store';
 import { useOfficeManagement } from '../facades';
 import { TITLES } from '../config';
 import { useRouteSearchParams } from '@bille/developer-kit';
@@ -76,13 +79,23 @@ export const OfficeManagementController = () => {
   const { officeId } = useRouteSearchParams<{ officeId: string }>();
   const { prepare } = useOfficeManagement();
   const { step } = useStepsProvider();
-  const stage = useSelector(getOfficeManagementStage);
+  const {
+    idle,
+    creating,
+    editing,
+    preparing,
+    createFailed,
+    editionFailed,
+    prepareFailed,
+    created,
+    edited,
+  } = useSelector(getOfficeManagementReducer);
 
   useEffect(() => prepare(officeId), [officeId]);
 
-  if (stage === 'IDLE') return null;
+  if (idle) return null;
 
-  if (stage === 'CREATING' || stage === 'EDITING' || stage === 'PREPARING') {
+  if (creating || editing || preparing) {
     return (
       <Center>
         <Rocket size={256} />
@@ -90,11 +103,7 @@ export const OfficeManagementController = () => {
     );
   }
 
-  if (
-    stage === 'CREATE_FAILED' ||
-    stage === 'EDIT_FAILED' ||
-    stage === 'PREPARE_FAILED'
-  ) {
+  if (createFailed || editionFailed || prepareFailed) {
     return (
       <Center>
         <ErrorScreen text="Something went wrong..." />
@@ -102,7 +111,7 @@ export const OfficeManagementController = () => {
     );
   }
 
-  if (stage === 'CREATED') {
+  if (created) {
     return (
       <Center>
         <Alert severity="success" message="Office created!" />
@@ -110,7 +119,7 @@ export const OfficeManagementController = () => {
     );
   }
 
-  if (stage === 'EDITED') {
+  if (edited) {
     return (
       <Center>
         <Alert severity="success" message="Edit done!" />

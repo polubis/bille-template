@@ -11,7 +11,7 @@ import { BillespaceEpic } from '../store';
 import {
   getOfficeManagementForm,
   getOfficeManagementLoadedOffice,
-  getOfficeManagementStage,
+  getOfficeManagementReducer,
 } from './selectors';
 import { officeManagementAllActions } from './slice';
 
@@ -86,16 +86,16 @@ export const finishOfficeManagement: BillespaceEpic = (action$, state$) =>
         return throwAnError();
       }
 
-      const stage = getOfficeManagementStage(state$.value);
+      const { creating, editing } = getOfficeManagementReducer(state$.value);
 
-      if (stage === 'CREATING') {
+      if (creating) {
         return createOffice.mock(OFFICE).pipe(
           map(() => officeManagementAllActions.finished()),
           catchError(throwAnError)
         );
       }
 
-      if (stage === 'EDITING') {
+      if (editing) {
         const office = getOfficeManagementLoadedOffice(state$.value);
 
         if (!office) return throwAnError();

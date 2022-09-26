@@ -2,27 +2,17 @@ import { sum } from '@bille/developer-kit';
 import { createSelector } from '@reduxjs/toolkit';
 import { BillespaceStore } from '../store';
 
-const getOfficeManagementReducer = (store: BillespaceStore) =>
+export const getOfficeManagementReducer = (store: BillespaceStore) =>
   store.officeManagementReducer;
 
 export const getOfficeManagementForm = createSelector(
   getOfficeManagementReducer,
-  (reducer) =>
-    reducer.current.stage === 'IDLE' ||
-    reducer.current.stage === 'PREPARING' ||
-    reducer.current.stage === 'PREPARE_FAILED'
-      ? undefined
-      : reducer.current.form
+  (reducer) => reducer?.form
 );
 
 export const getOfficeManagementCountries = createSelector(
   getOfficeManagementReducer,
-  (reducer) =>
-    reducer.current.stage === 'IDLE' ||
-    reducer.current.stage === 'PREPARING' ||
-    reducer.current.stage === 'PREPARE_FAILED'
-      ? undefined
-      : reducer.current.countries
+  (reducer) => reducer.countries
 );
 
 export const getOfficeManagementSelectedCountry = createSelector(
@@ -43,11 +33,6 @@ export const getOfficeManagementSelectedCity = createSelector(
       : undefined
 );
 
-export const getOfficeManagementStage = createSelector(
-  getOfficeManagementReducer,
-  ({ current }) => current.stage
-);
-
 export const getDesksSum = createSelector(getOfficeManagementForm, (form) =>
   sum(form?.values.officeZones ?? [], 'desks')
 );
@@ -58,11 +43,5 @@ export const getSpacesSum = createSelector(getOfficeManagementForm, (form) =>
 
 export const getOfficeManagementLoadedOffice = createSelector(
   getOfficeManagementReducer,
-  (reducer) =>
-    reducer.current.stage === 'EDITION' ||
-    reducer.current.stage === 'EDITING' ||
-    reducer.current.stage === 'EDITED' ||
-    reducer.current.stage === 'EDIT_FAILED'
-      ? reducer.current.office
-      : undefined
+  (reducer) => reducer?.office
 );
