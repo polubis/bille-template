@@ -7,22 +7,12 @@ const getOfficeManagementReducer = (store: BillespaceStore) =>
 
 export const getOfficeManagementForm = createSelector(
   getOfficeManagementReducer,
-  (reducer) =>
-    reducer.current.stage === 'IDLE' ||
-    reducer.current.stage === 'PREPARING' ||
-    reducer.current.stage === 'PREPARE_FAILED'
-      ? undefined
-      : reducer.current.form
+  (reducer) => reducer?.form
 );
 
 export const getOfficeManagementCountries = createSelector(
   getOfficeManagementReducer,
-  (reducer) =>
-    reducer.current.stage === 'IDLE' ||
-    reducer.current.stage === 'PREPARING' ||
-    reducer.current.stage === 'PREPARE_FAILED'
-      ? undefined
-      : reducer.current.countries
+  (reducer) => reducer?.countries
 );
 
 export const getOfficeManagementSelectedCountry = createSelector(
@@ -45,7 +35,7 @@ export const getOfficeManagementSelectedCity = createSelector(
 
 export const getOfficeManagementStage = createSelector(
   getOfficeManagementReducer,
-  ({ current }) => current.stage
+  ({ stage }) => stage
 );
 
 export const getDesksSum = createSelector(getOfficeManagementForm, (form) =>
@@ -58,11 +48,5 @@ export const getSpacesSum = createSelector(getOfficeManagementForm, (form) =>
 
 export const getOfficeManagementLoadedOffice = createSelector(
   getOfficeManagementReducer,
-  (reducer) =>
-    reducer.current.stage === 'EDITION' ||
-    reducer.current.stage === 'EDITING' ||
-    reducer.current.stage === 'EDITED' ||
-    reducer.current.stage === 'EDIT_FAILED'
-      ? reducer.current.office
-      : undefined
+  (reducer) => reducer?.office
 );

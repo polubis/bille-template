@@ -13,14 +13,8 @@ import { initial, set } from './config';
 import { MIN_DESKS_COUNT, MIN_SPACES_COUNT } from './consts';
 import { OfficeManagementReducerState } from './models';
 
-const STATE: OfficeManagementReducerState = { current: { stage: 'IDLE' } };
-
-const getSetableState = (current: OfficeManagementReducerState['current']) => {
-  if (current.stage === 'EDITION' || current.stage === 'CREATION') {
-    return current;
-  }
-
-  throw new Error('Trying to set form value in invalid stage');
+const STATE: OfficeManagementReducerState = {
+  stage: 'IDLE',
 };
 
 export const [, officeManagementReducer, officeManagementAllActions] = slice(
@@ -28,10 +22,10 @@ export const [, officeManagementReducer, officeManagementAllActions] = slice(
   STATE,
   {
     prepare: (s, _: Action<Office['id'] | undefined>) => {
-      s.current = { stage: 'PREPARING' };
+      s.stage = 'PREPARING';
     },
     prepareFailed: (s) => {
-      s.current = { stage: 'PREPARE_FAILED' };
+      s.stage = 'PREPARE_FAILED';
     },
     creation: (
       s,
@@ -39,11 +33,9 @@ export const [, officeManagementReducer, officeManagementAllActions] = slice(
         countries: Country[];
       }>
     ) => {
-      s.current = {
-        stage: 'CREATION',
-        form: initial,
-        countries: a.payload.countries,
-      };
+      s.stage = 'CREATION';
+      s.form = initial;
+      s.countries = a.payload.countries;
     },
     edition: (
       s,
@@ -54,18 +46,17 @@ export const [, officeManagementReducer, officeManagementAllActions] = slice(
     ) => {
       const { office, countries } = a.payload;
 
-      s.current = {
-        stage: 'EDITION',
-        form: initial,
-        office,
-        countries,
-      };
-      set(s.current.form, 'cityId', office.city.id);
-      set(s.current.form, 'countryId', office.country.id);
-      set(s.current.form, 'address', office.address);
-      set(s.current.form, 'officeZones', office.officeZones);
-      set(s.current.form, 'parkingZones', office.parkingZones);
-      set(s.current.form, 'postCode', office.postCode);
+      s.stage = 'EDITION';
+      s.form = initial;
+      s.office = office;
+      s.countries = countries;
+
+      set(s.form, 'cityId', office.city.id);
+      set(s.form, 'countryId', office.country.id);
+      set(s.form, 'address', office.address);
+      set(s.form, 'officeZones', office.officeZones);
+      set(s.form, 'parkingZones', office.parkingZones);
+      set(s.form, 'postCode', office.postCode);
     },
     set: (
       s,
@@ -74,18 +65,22 @@ export const [, officeManagementReducer, officeManagementAllActions] = slice(
         value: OfficePayload[keyof OfficePayload];
       }>
     ) => {
-      const current = getSetableState(s.current);
+      if (!s.form) {
+        throw new Error('Not allowed to set form values');
+      }
 
-      set(current.form, a.payload.key, a.payload.value);
-      a.payload.key === 'countryId' && set(current.form, 'cityId', '');
+      set(s.form, a.payload.key, a.payload.value);
+      a.payload.key === 'countryId' && set(s.form, 'cityId', '');
     },
     addOfficeZone: (s, a: Action<string>) => {
-      const current = getSetableState(s.current);
+      if (!s.form) {
+        throw new Error('Not allowed to set form values');
+      }
 
       set(
-        current.form,
+        s.form,
         'officeZones',
-        add(current.form.values.officeZones, {
+        add(s.form.values.officeZones, {
           name: a.payload,
           id: id(),
           desks: MIN_DESKS_COUNT,
@@ -93,30 +88,36 @@ export const [, officeManagementReducer, officeManagementAllActions] = slice(
       );
     },
     updateOfficeZone: (s, a: Action<OfficeZone>) => {
-      const current = getSetableState(s.current);
+      if (!s.form) {
+        throw new Error('Not allowed to set form values');
+      }
 
       set(
-        current.form,
+        s.form,
         'officeZones',
-        update(current.form.values.officeZones, 'id', a.payload)
+        update(s.form.values.officeZones, 'id', a.payload)
       );
     },
     deleteOfficeZone: (s, a: Action<OfficeZone['id']>) => {
-      const current = getSetableState(s.current);
+      if (!s.form) {
+        throw new Error('Not allowed to set form values');
+      }
 
       set(
-        current.form,
+        s.form,
         'officeZones',
-        remove(current.form.values.officeZones, 'id', a.payload)
+        remove(s.form.values.officeZones, 'id', a.payload)
       );
     },
     addParkingZone: (s, a: Action<string>) => {
-      const current = getSetableState(s.current);
+      if (!s.form) {
+        throw new Error('Not allowed to set form values');
+      }
 
       set(
-        current.form,
+        s.form,
         'parkingZones',
-        add(current.form.values.parkingZones, {
+        add(s.form.values.parkingZones, {
           name: a.payload,
           id: id(),
           spaces: MIN_SPACES_COUNT,
@@ -124,32 +125,35 @@ export const [, officeManagementReducer, officeManagementAllActions] = slice(
       );
     },
     updateParkingZone: (s, a: Action<ParkingZone>) => {
-      const current = getSetableState(s.current);
+      if (!s.form) {
+        throw new Error('Not allowed to set form values');
+      }
 
       set(
-        current.form,
+        s.form,
         'parkingZones',
-        update(current.form.values.parkingZones, 'id', a.payload)
+        update(s.form.values.parkingZones, 'id', a.payload)
       );
     },
     deleteParkingZone: (s, a: Action<ParkingZone['id']>) => {
-      const current = getSetableState(s.current);
+      if (!s.form) {
+        throw new Error('Not allowed to set form values');
+      }
 
       set(
-        current.form,
+        s.form,
         'parkingZones',
-        remove(current.form.values.parkingZones, 'id', a.payload)
+        remove(s.form.values.parkingZones, 'id', a.payload)
       );
     },
     finish: (s) => {
-      s.current.stage = s.current.stage === 'EDITION' ? 'EDITING' : 'CREATING';
+      s.stage = s.stage === 'EDITION' ? 'EDITING' : 'CREATING';
     },
     finished: (s) => {
-      s.current.stage = s.current.stage === 'EDITING' ? 'EDITED' : 'CREATED';
+      s.stage = s.stage === 'EDITING' ? 'EDITED' : 'CREATED';
     },
     finishFailed: (s) => {
-      s.current.stage =
-        s.current.stage === 'EDITING' ? 'EDIT_FAILED' : 'CREATE_FAILED';
+      s.stage = s.stage === 'EDITING' ? 'EDIT_FAILED' : 'CREATE_FAILED';
     },
   }
 );
