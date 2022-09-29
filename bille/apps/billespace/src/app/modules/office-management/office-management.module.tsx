@@ -2,6 +2,7 @@
 import { StepsProvider } from '@bille/ui';
 import Loadable from 'react-loadable';
 import { TITLES } from './config';
+import { OfficeManagementProvider } from './logic';
 
 const OfficeManagementController = Loadable({
   loader: () =>
@@ -14,7 +15,9 @@ const OfficeManagementController = Loadable({
 export const OfficeManagementModule = () => {
   return (
     <StepsProvider maxStep={TITLES.length}>
-      <OfficeManagementController />
+      <OfficeManagementProvider>
+        <OfficeManagementController />
+      </OfficeManagementProvider>
     </StepsProvider>
   );
 };

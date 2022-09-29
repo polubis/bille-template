@@ -1,38 +1,34 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import {
-  getOfficeManagementForm,
-  getSpacesSum,
-  MAX_SPACES_COUNT,
-  MIN_SPACES_COUNT,
-  useSelector,
-} from '@bille/billespace-store';
 import { useMemo } from 'react';
 import {
   LayoutComponent,
   RangeSelectComponent,
   RangeSelectItem,
 } from '../components';
-import { useOfficeManagement } from '../facades';
 import { Detail } from '@bille/ui';
+import {
+  MAX_SPACES_COUNT,
+  MIN_SPACES_COUNT,
+  useOfficeManagementAction,
+  useSafeOfficeManagementState,
+} from '../logic';
+import { sum } from '@bille/developer-kit';
 
 export const ParkingSpacesController = () => {
-  const { updateParkingZone } = useOfficeManagement();
-  const form = useSelector(getOfficeManagementForm);
-  const sum = useSelector(getSpacesSum);
-
-  if (!form) {
-    throw new Error('Some properties are not available yet');
-  }
+  const { updateParkingZone } = useOfficeManagementAction();
+  const { form } = useSafeOfficeManagementState();
 
   const { parkingZones } = form.values;
-  const items = useMemo(
-    () =>
-      parkingZones.map(
+  const { items, spaces } = useMemo(
+    () => ({
+      items: parkingZones.map(
         ({ spaces, ...officeZone }): RangeSelectItem => ({
           ...officeZone,
           count: spaces,
         })
       ),
+      spaces: sum(parkingZones, 'spaces'),
+    }),
     [parkingZones]
   );
 
@@ -50,7 +46,7 @@ export const ParkingSpacesController = () => {
         }
       />
 
-      <Detail label="all spaces" value={`${sum}`} />
+      <Detail label="all spaces" value={`${spaces}`} />
     </LayoutComponent>
   );
 };

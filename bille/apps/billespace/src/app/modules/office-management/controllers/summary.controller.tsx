@@ -1,15 +1,11 @@
-import {
-  getDesksSum,
-  getOfficeManagementForm,
-  getOfficeManagementSelectedCity,
-  getOfficeManagementSelectedCountry,
-  getSpacesSum,
-  useSelector,
-} from '@bille/billespace-store';
 import { Detail, Details } from '@bille/ui';
 import styled from 'styled-components';
 import { LayoutComponent } from '../components';
-import { useOfficeManagement } from '../facades';
+import {
+  useOfficeManagementAction,
+  useSafeOfficeManagementState,
+} from '../logic';
+import { sum, useRouteSearchParams } from '@bille/developer-kit';
 
 const DetailContainer = styled.div`
   display: flex;
@@ -24,22 +20,20 @@ const DetailContainer = styled.div`
 `;
 
 export const SummaryController = () => {
-  const { finish } = useOfficeManagement();
-  const form = useSelector(getOfficeManagementForm);
-  const city = useSelector(getOfficeManagementSelectedCity);
-  const country = useSelector(getOfficeManagementSelectedCountry);
-  const desksSum = useSelector(getDesksSum);
-  const spacesSum = useSelector(getSpacesSum);
+  const { finish } = useOfficeManagementAction();
+  const { officeId } = useRouteSearchParams<{ officeId: string }>();
+  const { form, countries } = useSafeOfficeManagementState();
 
-  if (!form || !country || !city) {
-    throw new Error('Some properties are not available yet');
-  }
+  const desks = sum(form.values.officeZones, 'desks');
+  const spaces = sum(form.values.parkingZones, 'spaces');
+  const country = countries.find(({ id }) => id === form.values.countryId);
+  const city = country?.cities.find((city) => city.id === form.values.cityId);
 
   return (
-    <LayoutComponent onSubmit={finish}>
+    <LayoutComponent onSubmit={() => finish(officeId)}>
       <Details>
-        <Detail key={0} label="Country" value={country.name} />
-        <Detail key={1} label="City" value={city.name} />
+        <Detail key={0} label="Country" value={country ? country.name : ''} />
+        <Detail key={1} label="City" value={city ? city.name : ''} />
         <Detail key={2} label="Address" value={form.values.address} />
         <Detail key={3} label="Post code" value={form.values.postCode} />
         <Detail
@@ -71,12 +65,12 @@ export const SummaryController = () => {
         <Detail
           key={6}
           label="Total office desks"
-          value={(Value) => <Value>{desksSum}</Value>}
+          value={(Value) => <Value>{desks}</Value>}
         />
         <Detail
           key={7}
           label="Total parking spaces"
-          value={(Value) => <Value>{spacesSum}</Value>}
+          value={(Value) => <Value>{spaces}</Value>}
         />
       </Details>
     </LayoutComponent>

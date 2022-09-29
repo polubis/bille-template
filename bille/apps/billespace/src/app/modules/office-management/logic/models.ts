@@ -1,8 +1,16 @@
-import { Country, Office, OfficePayload } from '@bille/billespace-services';
-import { FormState } from '@bille/developer-kit';
-import { State } from '../abstraction';
+import { Country, Office, OfficePayload } from "@bille/billespace-services";
+import { Formable } from "@bille/developer-kit";
 
-type OfficeManagementForm = FormState<OfficePayload>;
+type State<
+  S extends string,
+  D extends Record<string, unknown> | undefined = undefined
+> = D extends undefined
+  ? {
+      stage: S;
+    }
+  : D & { stage: S };
+
+type OfficeManagementForm = Formable<OfficePayload>;
 export type OfficeId = Office['id'] | undefined;
 
 type PrepareState =
@@ -28,6 +36,4 @@ type EditState =
   | State<'EDIT_FAILED'>
   | State<'EDITED'>;
 
-export interface OfficeManagementReducerState {
-  current: PrepareState | CreationState | EditState;
-}
+export type OfficeManagementState = PrepareState | CreationState | EditState;

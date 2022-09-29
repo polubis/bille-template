@@ -10,10 +10,9 @@ import {
   useStepsProvider,
 } from '@bille/ui';
 import Loadable from 'react-loadable';
-import { getOfficeManagementStage, useSelector } from '@bille/billespace-store';
-import { useOfficeManagement } from '../facades';
 import { TITLES } from '../config';
 import { useRouteSearchParams } from '@bille/developer-kit';
+import { useOfficeManagementAction, useOfficeManagementState } from '../logic';
 
 const OfficeDetailsController = Loadable({
   loader: () =>
@@ -74,11 +73,11 @@ const CONTROLLERS = [
 
 export const OfficeManagementController = () => {
   const { officeId } = useRouteSearchParams<{ officeId: string }>();
-  const { prepare } = useOfficeManagement();
+  const { stage } = useOfficeManagementState();
+  const { prepare } = useOfficeManagementAction();
   const { step } = useStepsProvider();
-  const stage = useSelector(getOfficeManagementStage);
 
-  useEffect(() => prepare(), [officeId]);
+  useEffect(() => prepare(officeId), [officeId]);
 
   if (stage === 'IDLE') return null;
 

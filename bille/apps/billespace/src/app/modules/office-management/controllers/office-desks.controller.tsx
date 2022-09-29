@@ -1,38 +1,33 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useMemo } from 'react';
-import { useOfficeManagement } from '../facades';
 import {
   LayoutComponent,
   RangeSelectComponent,
   RangeSelectItem,
 } from '../components';
-import {
-    getDesksSum,
-  getOfficeManagementForm,
-  MAX_DESKS_COUNT,
-  MIN_DESKS_COUNT,
-  useSelector,
-} from '@bille/billespace-store';
 import { Detail } from '@bille/ui';
+import {
+  useOfficeManagementAction,
+  useSafeOfficeManagementState,
+} from '../logic';
+import { MAX_DESKS_COUNT, MIN_DESKS_COUNT } from '../logic/config';
+import { sum } from '@bille/developer-kit';
 
 export const OfficeDesksController = () => {
-  const { updateOfficeZone } = useOfficeManagement();
-  const form = useSelector(getOfficeManagementForm);
-  const sum = useSelector(getDesksSum);
-
-  if (!form) {
-    throw new Error('Some properties are not available yet');
-  }
+  const { form } = useSafeOfficeManagementState();
+  const { updateOfficeZone } = useOfficeManagementAction();
 
   const { officeZones } = form.values;
-  const items = useMemo(
-    () =>
-      officeZones.map(
+  const { items, desks } = useMemo(
+    () => ({
+      items: officeZones.map(
         ({ desks, ...officeZone }): RangeSelectItem => ({
           ...officeZone,
           count: desks,
         })
       ),
+      desks: sum(officeZones, 'desks'),
+    }),
     [officeZones]
   );
 
@@ -50,7 +45,7 @@ export const OfficeDesksController = () => {
         }
       />
 
-      <Detail label="all desks" value={`${sum}`} />
+      <Detail label="all desks" value={`${desks}`} />
     </LayoutComponent>
   );
 };

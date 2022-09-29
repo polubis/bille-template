@@ -1,16 +1,14 @@
-import { getOfficeManagementForm, useSelector } from '@bille/billespace-store';
 import { ItemList } from '@bille/ui';
 import { LayoutComponent } from '../components';
-import { useOfficeManagement } from '../facades';
+import {
+  useOfficeManagementAction,
+  useSafeOfficeManagementState,
+} from '../logic';
 
 export const OfficeZonesController = () => {
   const { addOfficeZone, updateOfficeZone, deleteOfficeZone } =
-    useOfficeManagement();
-  const form = useSelector(getOfficeManagementForm);
-
-  if (!form) {
-    throw new Error('Some properties are not available yet');
-  }
+    useOfficeManagementAction();
+  const { form } = useSafeOfficeManagementState();
 
   const invalid = !!form.errors.officeZones;
   const { officeZones } = form.values;

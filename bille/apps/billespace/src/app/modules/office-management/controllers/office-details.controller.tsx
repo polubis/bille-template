@@ -1,31 +1,23 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import {
-  getOfficeManagementCountries,
-  getOfficeManagementForm,
-  getOfficeManagementSelectedCity,
-  getOfficeManagementSelectedCountry,
-  useSelector,
-} from '@bille/billespace-store';
 import { Input, Select, SelectItem } from '@bille/ui';
 import { LayoutComponent } from '../components';
-import { useOfficeManagement } from '../facades';
+import {
+  useOfficeManagementAction,
+  useSafeOfficeManagementState,
+} from '../logic';
 
 export const OfficeDetailsController = () => {
-  const form = useSelector(getOfficeManagementForm);
-  const countries = useSelector(getOfficeManagementCountries);
-  const country = useSelector(getOfficeManagementSelectedCountry);
-  const city = useSelector(getOfficeManagementSelectedCity);
-  const { set } = useOfficeManagement();
-
-  if (!form || !countries) {
-    throw new Error('Some properties are not available yet');
-  }
+  const { form, countries } = useSafeOfficeManagementState();
+  const { set } = useOfficeManagementAction();
 
   const disabled =
     !!form.errors.address ||
     !!form.errors.postCode ||
     !!form.errors.cityId ||
     !!form.errors.countryId;
+
+  const country = countries.find(({ id }) => id === form.values.countryId);
+  const city = country?.cities.find((city) => city.id === form.values.cityId);
 
   return (
     <LayoutComponent disabled={disabled}>
