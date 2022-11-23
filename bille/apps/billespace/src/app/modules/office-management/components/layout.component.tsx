@@ -31,11 +31,12 @@ export const LayoutComponent = ({
   children,
   disabled,
   onSubmit,
+  ...rest
 }: LayoutComponentProps) => {
   return (
     <>
       <Layout>{children}</Layout>
-      <FooterComponent disabled={disabled} onSubmit={onSubmit} />
+      <FooterComponent disabled={disabled} onSubmit={onSubmit} {...rest} />
     </>
   );
 };

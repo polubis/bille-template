@@ -1,4 +1,4 @@
-import { Button, useStepsProvider } from '@bille/ui';
+import { Button } from '@bille/ui';
 import styled from 'styled-components';
 
 const Footer = styled.footer`
@@ -12,16 +12,22 @@ const Footer = styled.footer`
 
 export interface FooterComponentProps {
   disabled?: boolean;
+  isFirst?: boolean;
+  isLast?: boolean;
+  onNext: () => void;
+  onPrev: () => void;
   onSubmit?: () => void;
 }
 
 export const FooterComponent = ({
   disabled,
+  isFirst,
+  isLast,
+  onNext,
+  onPrev,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onSubmit = () => {},
 }: FooterComponentProps) => {
-  const { prev, next, isFirst, isLast } = useStepsProvider();
-
   return (
     <Footer>
       {isFirst || (
@@ -29,7 +35,7 @@ export const FooterComponent = ({
           motive="outlinedGray"
           data-cy="back-button"
           shape="rect"
-          onClick={prev}
+          onClick={onPrev}
         >
           Back
         </Button>
@@ -41,7 +47,7 @@ export const FooterComponent = ({
         data-cy="confirm-button"
         disabled={disabled}
         onClick={() => {
-          next();
+          onNext();
           onSubmit();
         }}
       >
