@@ -5,7 +5,7 @@ import { createSlice, Action } from '../abstraction';
 import { initial, set } from './form';
 import { INITIAL_STATE, OfficeId } from './models';
 
-export const [, officeManagementReducer, officeManagementActions] = createSlice(
+export const [officeManagementReducer, officeManagementActions] = createSlice(
   'officeManagement',
   INITIAL_STATE,
   {

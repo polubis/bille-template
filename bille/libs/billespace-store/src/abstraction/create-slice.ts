@@ -19,5 +19,5 @@ export const createSlice = <
     reducers,
   });
 
-  return [initialState, slice.reducer, slice.actions] as const;
+  return [slice.reducer, slice.actions] as const;
 };
