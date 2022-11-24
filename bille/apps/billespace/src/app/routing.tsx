@@ -2,7 +2,7 @@ import { DrawerMenuItem } from '@bille/ui';
 import { ReactNode } from 'react';
 import Icon from '@mdi/react';
 import { mdiHome, mdiOfficeBuilding } from '@mdi/js';
-import { OfficeManagementModule } from './modules/office-management';
+import { OfficeManagementModule } from './modules';
 
 export type AppRoute = { Component: () => ReactNode } & Omit<
   DrawerMenuItem,
