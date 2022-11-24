@@ -40,3 +40,5 @@ export const { initial, set } = ReduxToolkitForm<OfficePayload>(
 );
 
 export type OfficeManagementForm = FormState<OfficePayload>;
+export type OfficeManagementFormKeys = keyof OfficeManagementForm['values'];
+export type OfficeManagementFormValues = OfficeManagementForm['values'];
