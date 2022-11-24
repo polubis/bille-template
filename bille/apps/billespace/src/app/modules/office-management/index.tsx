@@ -1,1 +1,3 @@
-export * from './office-management.module';
+export const OfficeManagementModule = () => {
+  return <div>Office management</div>;
+};

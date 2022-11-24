@@ -1,20 +1,17 @@
 import { Outlet, Route, Routes } from 'react-router-dom';
-import { Center, ErrorScreen, Layout } from '@bille/ui';
+import { Center, ErrorScreen } from '@bille/ui';
 import { APP_ROUTES } from './routing';
-import { NavigationController, TopbarController } from './controllers';
+import { AppLayout } from './components';
 
-export function App() {
+export const App = () => {
   return (
     <Routes>
       <Route
         path="/"
         element={
-          <Layout
-            header={<TopbarController />}
-            footer={<NavigationController />}
-          >
+          <AppLayout>
             <Outlet />
-          </Layout>
+          </AppLayout>
         }
       >
         {APP_ROUTES.map(({ Component, ...item }) => (
@@ -31,4 +28,4 @@ export function App() {
       </Route>
     </Routes>
   );
-}
+};
