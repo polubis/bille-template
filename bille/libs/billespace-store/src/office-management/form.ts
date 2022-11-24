@@ -1,5 +1,6 @@
 import {
   address,
+  FormState,
   inRange,
   notEmpty,
   ReduxToolkitForm,
@@ -37,3 +38,5 @@ export const { initial, set } = ReduxToolkitForm<OfficePayload>(
     ],
   }
 );
+
+export type OfficeManagementForm = FormState<OfficePayload>;
