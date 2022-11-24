@@ -1,4 +1,4 @@
-import { Country, Office } from '@bille/billespace-services';
+import type { Country, Office } from '@bille/billespace-services';
 import { State } from '../abstraction';
 import { OfficeManagementForm } from './form';
 

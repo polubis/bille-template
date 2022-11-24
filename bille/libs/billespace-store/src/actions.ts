@@ -1,1 +1,1 @@
-export { officeManagementActions } from './office-management/actions';
+export * from './office-management/actions';

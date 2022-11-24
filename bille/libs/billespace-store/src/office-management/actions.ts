@@ -1,3 +1,5 @@
 import { officeManagementActions } from './slice';
 
-export { officeManagementActions };
+const { prepare } = officeManagementActions;
+
+export { prepare };
