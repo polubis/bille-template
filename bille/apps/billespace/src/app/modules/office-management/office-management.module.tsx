@@ -1,5 +1,7 @@
+import { DetailsContainer } from './containers/details.container';
+
 const OfficeManagementModule = () => {
-  return <div>Here all containers will be added</div>;
+  return <DetailsContainer />;
 };
 
-export default OfficeManagementModule;
+export { OfficeManagementModule };
