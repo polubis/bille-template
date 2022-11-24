@@ -10,7 +10,7 @@ interface StepsContext {
 }
 
 interface StepsProviderProps {
-  children: ReactNode;
+  children: (step: number) => ReactNode | ReactNode;
   maxStep: number;
 }
 
@@ -44,7 +44,11 @@ export const StepsProvider = ({ children, maxStep }: StepsProviderProps) => {
     [step, maxStep]
   );
 
-  return <Context.Provider value={value}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={value}>
+      {typeof children === 'function' ? children(step) : children}
+    </Context.Provider>
+  );
 };
 
 export const useStepsProvider = () => {
