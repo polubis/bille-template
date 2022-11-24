@@ -10,7 +10,7 @@ type EditData = CreationData & {
 };
 
 // Current property is added to make state swap easier.
-export interface OfficeManagementReducer {
+export interface OfficeManagementReducerState {
   current:
     | State<'IDLE'>
     | State<'PREPARING'>
