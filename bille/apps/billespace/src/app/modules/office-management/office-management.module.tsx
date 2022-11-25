@@ -1,5 +1,5 @@
 import { StepsProvider } from '@bille/ui';
-import { DetailsController } from './controllers/details.controller';
+import { DetailsController } from './controllers/details';
 import { useManagementPrepare } from './facades';
 
 const CONTROLLERS = [DetailsController];
