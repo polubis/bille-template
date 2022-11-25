@@ -21,7 +21,7 @@ const useDetailsFacade = () => {
   };
 };
 
-const DetailsContainer = () => {
+const DetailsController = () => {
   const { values, errors, set } = useDetailsFacade();
 
   return (
@@ -44,4 +44,4 @@ const DetailsContainer = () => {
   );
 };
 
-export { DetailsContainer };
+export { DetailsController };

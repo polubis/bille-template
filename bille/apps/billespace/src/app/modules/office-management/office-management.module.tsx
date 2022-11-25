@@ -1,12 +1,12 @@
 import { StepsProvider } from '@bille/ui';
-import { DetailsContainer } from './containers/details.container';
+import { DetailsController } from './controllers/details.controller';
 
-const CONTAINERS = [DetailsContainer];
+const CONTROLLERS = [DetailsController];
 
-const getContainer = (step: number) => CONTAINERS[step]();
+const getContainer = (step: number) => CONTROLLERS[step]();
 
 const OfficeManagementModule = () => {
-  return <StepsProvider maxStep={CONTAINERS.length} children={getContainer} />;
+  return <StepsProvider maxStep={CONTROLLERS.length} children={getContainer} />;
 };
 
 export { OfficeManagementModule };
