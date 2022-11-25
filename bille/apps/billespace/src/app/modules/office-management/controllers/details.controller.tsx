@@ -1,28 +1,9 @@
-import {
-  useSelector,
-  OfficeManagementFormKeys,
-  selectOfficeManagementForm,
-} from '@bille/billespace-store';
 import { Input } from '@bille/ui';
-import { ChangeEvent } from 'react';
 import { Layout } from '../components';
-
-const useDetailsFacade = () => {
-  const { values, errors } = useSelector(selectOfficeManagementForm);
-
-  const set =
-    <K extends OfficeManagementFormKeys>(key: K) =>
-    (e: ChangeEvent<HTMLInputElement>): void => {};
-
-  return {
-    values,
-    errors,
-    set,
-  };
-};
+import { useDetails } from '../facades';
 
 const DetailsController = () => {
-  const { values, errors, set } = useDetailsFacade();
+  const { values, errors, set } = useDetails();
 
   return (
     <Layout>
